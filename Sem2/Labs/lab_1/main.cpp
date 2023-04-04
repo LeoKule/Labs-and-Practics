@@ -6,7 +6,7 @@ void textOutput(const animatedText& object){
     sf::RenderWindow window(sf::VideoMode(800, 600), "M.T.Cool!");
     sf::Text SFMLText;
     sf::Font mainFont;
-    if (mainFont.loadFromFile("..\\ext\\res\\consola.ttf")){
+    if (mainFont.loadFromFile("ext\\res\\consola.ttf")){
         SFMLText.setFont(mainFont);
         SFMLText.setCharacterSize(25);
         SFMLText.setFillColor(sf::Color::White);
