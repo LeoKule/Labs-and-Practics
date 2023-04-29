@@ -1,19 +1,20 @@
 #pragma once
 #include <iostream>
+#include <istream>
 #include <stdexcept>
+#include <cmath>
 
 template<typename T,unsigned short N, unsigned short M>
 class Matrix {
 private:
     T data[N][M];
-
 public:
     // Конструкторы
     Matrix() = default;
 
     Matrix(const Matrix& other) {
-        for(int i = 0; i<N; i++){
-            for(int j = 0; j<M; j++){
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < M; j++){
                 data[i][j] = other.data[i][j];
 
             }
@@ -53,7 +54,7 @@ public:
 
     // Операторы +, +=, *, *=
     // Оператор сложения матриц
-    Matrix operator+(const Matrix<T,N,M>& other) const {
+    Matrix operator+(const Matrix<T,N,M>& other) {
         Matrix<T,N,M> result = *this;
         result += other;
         return result;
@@ -67,22 +68,54 @@ public:
         }
         return *this;
     }
+
+    T get(unsigned short i, unsigned short j) const {
+        return data[i][j];
+    }
+
+    T& set(unsigned short i, unsigned short j) {
+        return data[i][j];
+    }
+
     // Оператор умножения матриц
-    template <size_t P>
-    Matrix<T, N, P> operator*(const Matrix<T, M, P>& other) const {
-        Matrix<T, N, P> result;
-        for (size_t i = 0; i < N; i++) {
-            for (size_t j = 0; j < P; j++) {
-                for (size_t k = 0; k < M; k++) {
-                    result(i, j) += data[i * M + k] * other(k, j);
+    //template<unsigned short Q, unsigned short W>
+   /* Matrix<T, N, M> operator*(const Matrix<T, N, M>& other) const {
+        Matrix<T, N, M> result{};
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                result(i, j) = T{0};
+                for (int k = 0; k < M; k++) {
+                    result(i, j) += data[i][k] * other(k, j);
                 }
             }
         }
         return result;
-    }
+    }*/
+
+   template<unsigned short Q, unsigned short W>
+   Matrix<T, N, W> operator* (const Matrix<T, Q, W>& other){
+       Matrix<T, N, W> result{};
+       if (M == Q){
+           for (int i = 0; i < N; i++){
+               for (int j = 0; j < W; j++){
+                   result.set(i, j) = 0;
+                   for (int k = 0; k < M; k++){
+                       result.set(i, j) += data[i][k] * other.get(k, j);
+                   }
+               }
+           }
+       }
+       return result;
+   }
+
     // Оператор умножения с присваиванием
-    template <size_t P>
+    /*template <size_t P>
     Matrix& operator*=(const Matrix<T, M, P>& other) {
+        *this = *this * other;
+        return *this;
+    }*/
+
+    Matrix<T, N, M>& operator*=(const Matrix<T, N, M>& other) {
         *this = *this * other;
         return *this;
     }
