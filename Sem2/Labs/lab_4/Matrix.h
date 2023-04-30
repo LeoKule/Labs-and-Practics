@@ -69,38 +69,15 @@ public:
         return *this;
     }
 
-    T get(unsigned short i, unsigned short j) const {
-        return data[i][j];
-    }
-
-    T& set(unsigned short i, unsigned short j) {
-        return data[i][j];
-    }
-
-    // Оператор умножения матриц
-    //template<unsigned short Q, unsigned short W>
-   /* Matrix<T, N, M> operator*(const Matrix<T, N, M>& other) const {
-        Matrix<T, N, M> result{};
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                result(i, j) = T{0};
-                for (int k = 0; k < M; k++) {
-                    result(i, j) += data[i][k] * other(k, j);
-                }
-            }
-        }
-        return result;
-    }*/
-
    template<unsigned short Q, unsigned short W>
    Matrix<T, N, W> operator* (const Matrix<T, Q, W>& other){
        Matrix<T, N, W> result{};
        if (M == Q){
            for (int i = 0; i < N; i++){
                for (int j = 0; j < W; j++){
-                   result.set(i, j) = 0;
+                   result.data[i][j] = 0;
                    for (int k = 0; k < M; k++){
-                       result.set(i, j) += data[i][k] * other.get(k, j);
+                       result.data[i][j] += data[i][k] * other.data[k][j];
                    }
                }
            }
@@ -108,14 +85,7 @@ public:
        return result;
    }
 
-    // Оператор умножения с присваиванием
-    /*template <size_t P>
-    Matrix& operator*=(const Matrix<T, M, P>& other) {
-        *this = *this * other;
-        return *this;
-    }*/
-
-    Matrix<T, N, M>& operator*=(const Matrix<T, N, M>& other) {
+    Matrix<T, N, M>& operator*=(const Matrix<T, N, M> other) {
         *this = *this * other;
         return *this;
     }
