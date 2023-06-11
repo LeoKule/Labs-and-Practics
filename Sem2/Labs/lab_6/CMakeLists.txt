@@ -3,4 +3,6 @@ project(lab_6)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(lab_6 main.cpp Logger.h Logger.cpp)
+include_directories("inc/")
+
+add_executable(lab_6 main.cpp Logger.cpp inc/Logger.h)

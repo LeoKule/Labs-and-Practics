@@ -1,3 +1,0 @@
-[2023-05-23 18:36:49] INFO: Program started
-[2023-05-23 18:36:49] DEBUG: Debug message
-[2023-05-23 18:36:49] ERROR: Error occurred
