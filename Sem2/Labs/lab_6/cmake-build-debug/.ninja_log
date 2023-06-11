@@ -1,0 +1,7 @@
+# ninja log v5
+8	826	7065621539776771	CMakeFiles/lab_6.dir/main.cpp.obj	c206f56fbbc50159
+1	832	7065621539826817	CMakeFiles/lab_6.dir/Logger.cpp.obj	525d62e2db5bec2c
+836	1127	7065621542549317	lab_6.exe	bbbde9f5fbf9217d
+7	1046	7065630058639500	CMakeFiles/lab_6.dir/main.cpp.obj	c206f56fbbc50159
+0	1051	7065630058669525	CMakeFiles/lab_6.dir/Logger.cpp.obj	525d62e2db5bec2c
+1057	1233	7065630060120938	lab_6.exe	bbbde9f5fbf9217d
