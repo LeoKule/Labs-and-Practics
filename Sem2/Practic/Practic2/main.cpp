@@ -1,45 +1,35 @@
 #include <iostream>
+#include <cstddef>
 
-template <typename T>
-void copyArray(const T* source, T* destination, size_t size)
-{
-    for (size_t i = 0; i < size; ++i) {
-        destination[i] = source[i];
-    }
-}
+int main() {
+    setlocale(LC_ALL, "rus");
+    const int N = 12;
+    char* firstMas = new char[N] {1, 2, 3, 4, 5, 6, 7,8,9,10,11,12};
+    char* secondMas = new char[N];
 
-int main()
-{
-    const int N = 1000000; // Пример размера массива N
+    const int n = 10;
+    auto* newFirstMas = reinterpret_cast<size_t*>(firstMas);
+    auto* newSecondMas = reinterpret_cast<size_t*>(secondMas);
 
-    // Создание и заполнение исходного массива
-    int* sourceArray = new int[N];
-    for (int i = 0; i < N; ++i) {
-        sourceArray[i] = i;
+    for (int i = 0; i < N / sizeof(size_t); i++) {
+        newSecondMas[i] = newFirstMas[i];
     }
 
-    // Создание и выделение памяти для массива-назначения
-    int* destinationArray = new int[N];
+    char* remainingFirstMas = reinterpret_cast<char*>(newFirstMas);
+    char* remainingSecondMas = reinterpret_cast<char*>(newSecondMas);
 
-    // Копирование содержимого исходного массива в массив-назначение
-    copyArray(sourceArray, destinationArray, N);
-
-    // Проверка результатов
-    for (int i = 0; i < N; ++i) {
-        if (destinationArray[i] != sourceArray[i]) {
-            std::cout << "Ошибка: содержимое массивов не совпадает!" << std::endl;
-            break;
-        }
+    for (int i = N / sizeof(size_t) * sizeof(size_t); i < N; i++) {
+        remainingSecondMas[i] = remainingFirstMas[i];
     }
 
-    // Освобождение памяти
-    delete[] sourceArray;
-    delete[] destinationArray;
+    for (int i = 0; i < N; i++) {
+        std::cout << static_cast<int>(secondMas[i]) << " ";
+    }
+
+    std::cout << "������ ���� size_t: " << sizeof(size_t) << " ����" << std::endl;
+
+    delete[] firstMas;
+    delete[] secondMas;
 
     return 0;
 }
-//В данном случае мы используем простой цикл для копирования каждого элемента
-//из исходного массива в массив-назначение.
-//Каждая итерация цикла выполняет присваивание одного элемента, и таким образом, общая сложность копирования составляет O(N), где N - размер массива.
-//Кроме того, данный подход позволяет эффективно работать с массивами любого типа данных, так как в шаблонной функции copyArray
-//используется параметр шаблона typename T, который позволяет нам копировать элементы произвольного типа.
